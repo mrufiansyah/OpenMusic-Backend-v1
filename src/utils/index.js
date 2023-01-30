@@ -1,22 +1,38 @@
-/* eslint-disable camelcase */
-const mapDBToModel = ({
+const mapAlbumsDB = ({
+  id,
+  name,
+  year,
+  songs,
+}) => ({
+  id,
+  name,
+  year,
+  songs,
+});
+
+const mapSongDB = ({
   id,
   title,
   year,
-  performer,
   genre,
+  performer,
   duration,
-  inserted_at,
-  updated_at,
+  albumId,
 }) => ({
   id,
   title,
   year,
-  performer,
   genre,
+  performer,
   duration,
-  insertedAt: inserted_at,
-  updatedAt: updated_at,
+  albumId,
 });
-
-module.exports = { mapDBToModel };
+const filterTitleSongByParam = (song, title) => (song.title.toLowerCase().includes(title));
+// eslint-disable-next-line max-len
+const filterPerformerSongByParam = (song, performer) => (song.performer.toLowerCase().includes(performer));
+module.exports = {
+  mapAlbumsDB,
+  mapSongDB,
+  filterPerformerSongByParam,
+  filterTitleSongByParam,
+};

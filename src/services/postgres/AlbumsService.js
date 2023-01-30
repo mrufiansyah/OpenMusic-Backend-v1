@@ -16,10 +16,10 @@ class AlbumsService {
     const id = `album-${nanoid(16)}`;
 
     const query = {
-      text: 'INSERT INTO albums VALUES($1, $2, $3) RETURNING id',
+      text: 'INSERT INTO album VALUES($1, $2, $3) RETURNING id',
       values: [id, name, year],
     };
-
+    // console.log(query);
     const fetch = await this._pool.query(query);
 
     if (!fetch.rows[0].id) {
@@ -31,11 +31,11 @@ class AlbumsService {
 
   async getAlbumById(id) {
     const queryAlbum = {
-      text: 'SELECT * FROM albums WHERE id = $1',
+      text: 'SELECT * FROM album WHERE id = $1',
       values: [id],
     };
     const querySong = {
-      text: 'SELECT songs.id, songs.title, songs.performer FROM songs INNER JOIN albums ON albums.id=songs."albumId" WHERE albums.id=$1',
+      text: 'SELECT songs.id, songs.title, songs.performer FROM songs INNER JOIN album ON album.id=songs."albumId" WHERE album.id=$1',
       values: [id],
     };
     const fetchAlbum = await this._pool.query(queryAlbum);
@@ -54,7 +54,7 @@ class AlbumsService {
 
   async editAlbumById(id, { name, year }) {
     const query = {
-      text: 'UPDATE albums SET name = $1, year = $2 WHERE id = $3 RETURNING id',
+      text: 'UPDATE album SET name = $1, year = $2 WHERE id = $3 RETURNING id',
       values: [name, year, id],
     };
     const fetch = await this._pool.query(query);
@@ -66,7 +66,7 @@ class AlbumsService {
 
   async deleteAlbumById(id) {
     const query = {
-      text: 'DELETE FROM albums WHERE id = $1 RETURNING id',
+      text: 'DELETE FROM album WHERE id = $1 RETURNING id',
       values: [id],
     };
 

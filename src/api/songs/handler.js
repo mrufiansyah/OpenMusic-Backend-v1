@@ -17,11 +17,11 @@ class SongsHandler {
     try {
       this._validator.validateSongPayload(request.payload);
       const {
-        title, year, performer, genre, duration,
+        title, year, performer, genre, duration, albumId,
       } = request.payload;
 
       const songId = await this._service.addSong({
-        title, year, performer, genre, duration,
+        title, year, performer, genre, duration, albumId,
       });
 
       const response = h.response({
@@ -39,7 +39,6 @@ class SongsHandler {
           status: 'fail',
           message: error.message,
         });
-        // console.error(error.statusCode);
         response.code(error.statusCode);
         return response;
       }
@@ -50,13 +49,13 @@ class SongsHandler {
         message: 'Maaf, terjadi kegagalan pada server kami.',
       });
       response.code(500);
-      console.error(error);
       return response;
     }
   }
 
-  async getSongsHandler() {
-    const songs = await this._service.getSongs();
+  async getSongsHandler(request) {
+    const params = request.query;
+    const songs = await this._service.getSongs(params);
     return {
       status: 'success',
       data: {
@@ -95,7 +94,6 @@ class SongsHandler {
         message: 'Maaf, terjadi kegagalan pada server kami.',
       });
       response.code(500);
-      console.error(error);
       return response;
     }
   }
@@ -127,7 +125,6 @@ class SongsHandler {
         message: 'Maaf, terjadi kegagalan pada server kami.',
       });
       response.code(500);
-      console.error(error);
       return response;
     }
   }
@@ -156,7 +153,6 @@ class SongsHandler {
         message: 'Maaf, terjadi kegagalan pada server kami.',
       });
       response.code(500);
-      console.error(error);
       return response;
     }
   }
