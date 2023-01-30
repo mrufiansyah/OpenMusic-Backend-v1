@@ -39,7 +39,7 @@ class SongsHandler {
           status: 'fail',
           message: error.message,
         });
-        console.error(error.statusCode);
+        // console.error(error.statusCode);
         response.code(error.statusCode);
         return response;
       }
@@ -60,7 +60,11 @@ class SongsHandler {
     return {
       status: 'success',
       data: {
-        songs,
+        songs: songs.map((song) => ({
+          id: song.id,
+          title: song.title,
+          performer: song.performer,
+        })),
       },
     };
   }

@@ -1,4 +1,4 @@
-/* eslint-disable camelcase */
+exports.shorthands = undefined;
 
 exports.up = (pgm) => {
   pgm.createTable('songs', {
@@ -7,32 +7,26 @@ exports.up = (pgm) => {
       primaryKey: true,
     },
     title: {
-      type: 'TEXT',
+      type: 'VARCHAR(50)',
       notNull: true,
     },
     year: {
-      type: 'INTEGER',
+      type: 'INT',
       notNull: true,
     },
     performer: {
-      type: 'TEXT',
+      type: 'VARCHAR(35)',
       notNull: true,
     },
     genre: {
-      type: 'TEXT',
-      notNull: false,
+      type: 'VARCHAR(12)',
+      notNull: true,
     },
     duration: {
-      type: 'INTEGER',
-      notNull: false,
+      type: 'INT',
     },
-    inserted_at: {
-      type: 'TEXT',
-      notNull: true,
-    },
-    updated_at: {
-      type: 'TEXT',
-      notNull: true,
+    albumId: {
+      type: 'VARCHAR(50)',
     },
   });
 };
